@@ -3,27 +3,73 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useAddNewBookMutation } from "@/redux/api/baseApi";
+import { useGetSingleBookQuery, useUpdateBookMutation } from "@/redux/api/baseApi";
+import { useEffect } from "react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
-const AddBook = () => {
-    const form = useForm();
+const EditBook = () => {
+    const params = useParams();
     const navigate = useNavigate();
+    const { data, isLoading } = useGetSingleBookQuery(params.id);
+    const [updateBook] = useUpdateBookMutation();
 
-    const [addNewBook, { isError, error }] = useAddNewBookMutation();
-    const handleAddBook: SubmitHandler<FieldValues> = async (bookData) => {
-        console.log(bookData);
-        const res = await addNewBook(bookData)
-        console.log(res);
-        if (res.data.success) navigate('/books')
+    // TODO: fix the select field's default value
+
+    const form = useForm({
+        defaultValues: {
+            title: '',
+            author: '',
+            genre: '',
+            isbn: '',
+            description: '',
+            copies: '',
+            available: true
+        }
+    });
+
+    const { reset } = form;
+    const copies = form.watch('copies');
+
+    useEffect(() => {
+        if (data?.data) {
+            form.reset({
+                title: data.data.title,
+                author: data.data.author,
+                genre: data.data.genre,
+                isbn: data.data.isbn,
+                description: data.data.description,
+                copies: data.data.copies,
+                available: data.data.available
+            })
+        }
+
+    }, [data, reset, form])
+
+
+    useEffect(() => {
+        console.log(copies);
+        if (parseInt(copies) === 0) {
+            form.setValue('available', false)
+        }
+    }, [copies, form])
+
+
+    const handleEditBook: SubmitHandler<FieldValues> = async (updatedDoc) => {
+        console.log(updatedDoc);
+        if (updatedDoc.copies === 0) updatedDoc.available = false
+        const res = await updateBook({ _id: data.data._id, updatedDoc });
+        console.log(res.data.success);
+        if (res.data.success === true) navigate('/books')
     }
-    console.log(isError, error);
+
+    if (isLoading) return <p>Data is loading</p>
+
     return (
         <section className="flex flex-col h-[90vh] justify-center items-center">
-            <p className="text-3xl mb-3 text-left">ADD A NEW BOOK</p>
+            <p className="text-3xl mb-3 text-left">Update the book</p>
             <Form {...form}>
-                <form className="border p-10 rounded-md border-gray-600" onSubmit={form.handleSubmit(handleAddBook)}>
+                <form className="border p-10 rounded-md border-gray-600" onSubmit={form.handleSubmit(handleEditBook)}>
                     <FormField
                         control={form.control}
                         name="title"
@@ -73,7 +119,7 @@ const AddBook = () => {
                                 <Select
                                     required={true}
                                     onValueChange={field.onChange}
-                                    defaultValue={field.value}
+                                    value={field.value}
                                 >
                                     <FormControl className="w-full mb-3">
                                         <SelectTrigger>
@@ -145,14 +191,13 @@ const AddBook = () => {
                                         className="px-4"
                                         size={30}
                                         required={true}
-                                        min={1}
+                                        min={0}
                                         placeholder="How many copies you have"
                                     />
                                 </FormControl>
                             </FormItem>
                         )}
                     />
-
                     <FormField
                         control={form.control}
                         name="available"
@@ -184,10 +229,10 @@ const AddBook = () => {
                             </FormItem>
                         )}
                     />
-                    {isError && 'data' in error && (
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        <p className="text-red-400 text-sm">{(error as any).data.message}</p>
-                    )}
+
+                    {/* {
+                        isError && <p className="text-red-400 text-sm">{error.data.message}</p>
+                    } */}
                     <Button size={'lg'} className="border mt-3 w-full" type="submit">Add</Button>
                 </form>
             </Form>
@@ -195,4 +240,4 @@ const AddBook = () => {
     );
 };
 
-export default AddBook;
+export default EditBook;

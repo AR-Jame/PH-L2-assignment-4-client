@@ -6,9 +6,9 @@ const Navbar = () => {
            <p>📚</p>
            <ul className="text-xl flex items-center gap-5">
             <li><NavLink to='/'>Home</NavLink></li>
-            <li>All Books</li>
+            <li><NavLink to='/books'>All Books</NavLink></li>
             <li><NavLink to='/create-book'>Add Book</NavLink></li>
-           <li>Borrow Summery</li>
+            <li><NavLink to='/borrow-summary'>Borrow Summery</NavLink></li>
            </ul>
         </nav>
     );

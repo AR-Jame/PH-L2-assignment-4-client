@@ -1,6 +1,13 @@
 import App from "@/App";
-import AddBook from "@/pages/AddBook";
-import Home from "@/pages/Home/Home";
+import { lazy } from "react";
+
+const AddBook = lazy(() => import("@/pages/AddBook"))
+const AllBooks = lazy(() => import("@/pages/AllBooks"))
+const Borrow = lazy(() => import("@/pages/Borrow"))
+const BorrowSum = lazy(() => import("@/pages/BorrowSum"))
+const EditBook = lazy(() => import("@/pages/EditBook"))
+const Home = lazy(() => import("@/pages/Home/Home"))
+
 import { createBrowserRouter } from "react-router";
 const router = createBrowserRouter([
     {
@@ -14,6 +21,22 @@ const router = createBrowserRouter([
             {
                 path: '/create-book',
                 Component: AddBook
+            },
+            {
+                path: '/books',
+                Component: AllBooks
+            },
+            {
+                path: '/edit-book/:id',
+                Component: EditBook
+            },
+            {
+                path: '/borrow/:bookId',
+                Component: Borrow
+            },
+            {
+                path: '/borrow-summary',
+                Component: BorrowSum
             }
         ]
     }
