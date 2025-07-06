@@ -4,11 +4,16 @@ import { BookDeleteDialog } from "./BookDeleteDialog";
 import { NavLink } from "react-router";
 import type { IBooks } from '../../../../types'
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 interface IProps {
     book: IBooks
 }
 const BookCard = ({ book }: IProps) => {
-
+    const handleUnavailable = () => {
+        toast("Sorry!! This book is unavailable right now.", {
+            duration: 2000
+        })
+    }
     return (
         <div className="border rounded-md p-5 w-sm">
             <div className="flex justify-between items-start">
@@ -28,7 +33,16 @@ const BookCard = ({ book }: IProps) => {
             <p>ISBN: {book.isbn}</p>
             <p>Copies: {book.copies}</p>
             <div className="mt-4 flex items-center justify-between">
-                <NavLink to={`/borrow/${book._id}`} state={{ copies: book.copies, available: book.available }}><Button variant={"outline"}><Library /> Borrow</Button></NavLink>
+                {
+                    book.available ?
+                        <NavLink to={`/borrow/${book._id}`} state={{ copies: book.copies, available: book.available }}><Button variant={"outline"}><Library /> Borrow</Button></NavLink>
+                        :
+                        <span onClick={handleUnavailable}>
+                            <Button
+                                 disabled variant={'outline'}><Library /> Unavailable
+                            </Button>
+                        </span>
+                }
                 <div className="flex items-center gap-2">
                     <NavLink to={`/edit-book/${book._id}`}> <Button variant={"outline"}><PenLine /></Button></NavLink>
                     <BookDeleteDialog id={book._id} />

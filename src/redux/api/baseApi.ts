@@ -10,7 +10,8 @@ export const baseApi = createApi({
             providesTags: ['books'],
         }),
         getSingleBook: builder.query({
-            query: (_id) => `/api/books/${_id}`
+            query: (_id) => `/api/books/${_id}`,
+            providesTags: ['books', 'borrow']
         }),
         addNewBook: builder.mutation({
             query: (body) => ({
@@ -42,11 +43,11 @@ export const baseApi = createApi({
                 method: "POST",
                 body: data
             }),
-            invalidatesTags: ['borrow']
+            invalidatesTags: ['borrow', 'books']
         }),
         borrowSum: builder.query({
             query: () => '/api/borrow',
-            providesTags: ['borrow']
+            providesTags: ['borrow', 'books']
         })
     })
 })

@@ -12,12 +12,18 @@ import {
 import { Button } from "@/components/ui/button"
 import { useDeleteBookMutation } from "@/redux/api/baseApi";
 import { Trash } from "lucide-react"
+import { toast } from "sonner";
 
 export function BookDeleteDialog({ id }: { id: string }) {
   const [deleteBook] = useDeleteBookMutation();
   const handleDeleteBook = async () => {
     const res = await deleteBook(id);
     console.log(res);
+    if (res.data.success === true) {
+      toast("You successfully Deleted the book.", {
+        duration: 2000
+      })
+    }
   }
 
   return (

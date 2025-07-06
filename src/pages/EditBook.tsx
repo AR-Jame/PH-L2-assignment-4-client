@@ -3,10 +3,12 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { useGetSingleBookQuery, useUpdateBookMutation } from "@/redux/api/baseApi";
 import { useEffect } from "react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
+import { toast } from "sonner";
 
 const EditBook = () => {
     const params = useParams();
@@ -33,22 +35,22 @@ const EditBook = () => {
 
     useEffect(() => {
         if (data?.data) {
-            form.reset({
-                title: data.data.title,
-                author: data.data.author,
-                genre: data.data.genre,
-                isbn: data.data.isbn,
-                description: data.data.description,
-                copies: data.data.copies,
-                available: data.data.available
-            })
+            setTimeout(() => {
+                form.reset({
+                    title: data.data.title,
+                    author: data.data.author,
+                    genre: data.data.genre,
+                    isbn: data.data.isbn,
+                    description: data.data.description,
+                    copies: String(data.data.copies),
+                    available: data.data.available
+                });
+            }, 0);
         }
-
-    }, [data, reset, form])
+    }, [data, reset]);
 
 
     useEffect(() => {
-        console.log(copies);
         if (parseInt(copies) === 0) {
             form.setValue('available', false)
         }
@@ -60,15 +62,19 @@ const EditBook = () => {
         if (updatedDoc.copies === 0) updatedDoc.available = false
         const res = await updateBook({ _id: data.data._id, updatedDoc });
         console.log(res.data.success);
-        if (res.data.success === true) navigate('/books')
+        if (res.data.success === true) {
+            toast("You successfully Updated the book data.", {
+                duration: 2000
+            })
+            navigate('/books')
+        }
     }
 
     if (isLoading) return <p>Data is loading</p>
-
     return (
         <section className="flex flex-col h-[90vh] justify-center items-center">
             <p className="text-3xl mb-3 text-left">Update the book</p>
-            <Form {...form}>
+            <Form {...form} key={data?.data?._id || 'form'}>
                 <form className="border p-10 rounded-md border-gray-600" onSubmit={form.handleSubmit(handleEditBook)}>
                     <FormField
                         control={form.control}
@@ -79,7 +85,7 @@ const EditBook = () => {
                                 <FormControl>
                                     <Input
                                         {...field}
-                                        value={field.value || ''}
+                                        value={field.value}
                                         type="text"
                                         className="px-4"
                                         size={30}
@@ -99,7 +105,7 @@ const EditBook = () => {
                                 <FormControl>
                                     <Input
                                         {...field}
-                                        value={field.value || ''}
+                                        value={field.value}
                                         type="text"
                                         className="px-4"
                                         size={30}
@@ -118,12 +124,12 @@ const EditBook = () => {
                                 <FormLabel>Genre</FormLabel>
                                 <Select
                                     required={true}
+                                    value={field.value || ''}
                                     onValueChange={field.onChange}
-                                    value={field.value}
                                 >
                                     <FormControl className="w-full mb-3">
                                         <SelectTrigger>
-                                            <SelectValue placeholder="Select a genre" />
+                                            <SelectValue />
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
@@ -147,7 +153,7 @@ const EditBook = () => {
                                 <FormControl>
                                     <Input
                                         {...field}
-                                        value={field.value || ''}
+                                        value={field.value}
                                         type="text"
                                         className="px-4"
                                         size={30}
@@ -163,15 +169,13 @@ const EditBook = () => {
                         name="description"
                         render={({ field }) => (
                             <FormItem className="mb-2">
-                                <FormLabel>Description</FormLabel>
+                                <FormLabel>Bio</FormLabel>
                                 <FormControl>
-                                    <Input
+                                    <Textarea
+                                        placeholder="Tell us a little bit about yourself"
+                                        className="resize-none"
                                         {...field}
-                                        value={field.value || ''}
-                                        type="text"
-                                        className="px-4"
-                                        size={30}
-                                        placeholder="Write a brief description"
+                                        value={field.value}
                                     />
                                 </FormControl>
                             </FormItem>
@@ -186,7 +190,7 @@ const EditBook = () => {
                                 <FormControl>
                                     <Input
                                         {...field}
-                                        value={field.value || ''}
+                                        value={field.value}
                                         type="number"
                                         className="px-4"
                                         size={30}
@@ -206,8 +210,8 @@ const EditBook = () => {
                                 <FormLabel>Books availability</FormLabel>
                                 <FormControl>
                                     <RadioGroup
-                                        onValueChange={(val) => field.onChange(val === "true")} // ✅ convert to boolean
-                                        value={String(field.value)} // ✅ convert to string
+                                        onValueChange={(val) => field.onChange(val === "true")}
+                                        value={String(field.value)}
                                         className="flex"
                                     >
                                         <FormItem className="flex items-center gap-3">
