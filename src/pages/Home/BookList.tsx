@@ -4,13 +4,22 @@ import type { IBooks } from "types";
 import { NavLink } from "react-router";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import BookSkeleton from "@/components/layout/BookSkeleton";
 const BookList = () => {
     const { data, isLoading } = useGetBooksQuery({ limit: 6 });
     return (
         <div className="mx-[10%]">
             <p className="text-4xl font-semibold text-center pb-10">Discover Your Next Book</p>
             {isLoading ?
-                <p>Data is loading</p>
+                <div className="flex flex-wrap justify-center gap-6">
+                    <BookSkeleton />
+                    <BookSkeleton />
+                    <BookSkeleton />
+                    <BookSkeleton />
+                    <BookSkeleton />
+                    <BookSkeleton />
+                    <BookSkeleton />
+                </div>
                 :
                 <div className="flex flex-wrap items-center justify-center gap-5">
                     {

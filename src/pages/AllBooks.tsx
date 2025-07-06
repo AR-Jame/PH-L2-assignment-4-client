@@ -1,3 +1,4 @@
+import BookSkeleton from "@/components/layout/BookSkeleton";
 import BookCard from "@/components/module/books/BookCard";
 import { useGetBooksQuery } from "@/redux/api/baseApi";
 import type { IBooks } from "types";
@@ -11,7 +12,15 @@ const AllBooks = () => {
             {
                 isLoading
                     ?
-                    <p>Loading</p>
+                    <div className="flex flex-wrap justify-center gap-6">
+                        <BookSkeleton />
+                        <BookSkeleton />
+                        <BookSkeleton />
+                        <BookSkeleton />
+                        <BookSkeleton />
+                        <BookSkeleton />
+                        <BookSkeleton />
+                    </div>
                     :
                     <div className="flex flex-wrap justify-center items-center gap-6">
                         {data?.data?.map((book: IBooks) => <BookCard key={book._id} book={book} />)}
