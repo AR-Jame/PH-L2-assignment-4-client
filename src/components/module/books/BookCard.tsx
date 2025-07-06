@@ -13,7 +13,7 @@ const BookCard = ({ book }: IProps) => {
         <div className="border rounded-md p-5 w-sm">
             <div className="flex justify-between items-start">
                 <div>
-                    <p className="text-2xl font-medium">{book.title}</p>
+                    <p className="text-2xl font-medium"><NavLink className='hover:underline' to={`/books/${book._id}`}>{book.title}</NavLink></p>
                     <p className="text-xl text-[#292929]">{book.author}</p>
                 </div>
                 <p className={cn("text-sm text-white px-2 rounded-md py-0.5", {

@@ -1,6 +1,6 @@
 import App from "@/App";
-import BookSkeleton from "@/components/layout/BookSkeleton";
 import BorrowSumSkeleton from "@/components/layout/BorrowSumSkeleton";
+import BookDetails from "@/pages/BookDetails";
 import { lazy } from "react";
 
 const AddBook = lazy(() => import("@/pages/AddBook"))
@@ -43,6 +43,10 @@ const router = createBrowserRouter([
             {
                 path: '/loader',
                 Component: BorrowSumSkeleton
+            },
+            {
+                path: '/books/:id',
+                Component: BookDetails
             }
         ]
     }

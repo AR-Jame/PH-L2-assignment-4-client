@@ -83,7 +83,7 @@ export const Footer7 = ({
   return (
     <section className="pt-32">
       <hr className="mb-16" />
-      <div className="container mx-auto">
+      <div className="container lg:mx-auto">
         <div className="flex w-full flex-col justify-between gap-10 lg:flex-row lg:items-start lg:text-left">
           <div className="flex w-full flex-col justify-between gap-6 lg:items-start">
             {/* Logo */}

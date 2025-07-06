@@ -11,7 +11,7 @@ const AddBook = () => {
     const form = useForm();
     const navigate = useNavigate();
 
-    const [addNewBook, { isError, error }] = useAddNewBookMutation();
+    const [addNewBook, { isError, error, isLoading }] = useAddNewBookMutation();
     const handleAddBook: SubmitHandler<FieldValues> = async (bookData) => {
         console.log(bookData);
         const res = await addNewBook(bookData)
@@ -188,7 +188,13 @@ const AddBook = () => {
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         <p className="text-red-400 text-sm">{(error as any).data.message}</p>
                     )}
-                    <Button size={'lg'} className="border mt-3 w-full" type="submit">Add</Button>
+                    {
+                        isLoading ?
+                            <Button size={'lg'} disabled className="border mt-3 w-full" type="submit">Loading...</Button>
+
+                            :
+                            <Button size={'lg'} className="border mt-3 w-full" type="submit">Add</Button>
+                    }
                 </form>
             </Form>
         </section >
