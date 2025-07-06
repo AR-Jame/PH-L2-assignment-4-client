@@ -1,69 +1,62 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 📚 Book Management API
 
-Currently, two official plugins are available:
+A RESTful backend API built with **Node.js**, **TypeScript**, **MongoDB**, and **Mongoose** for managing books and handling borrow requests with quantity tracking and validations.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Features
+- **TypeScript**: Ensures type safety and enhanced developer experience.
+- **React**: Built with functional components and hooks for a modern UI.
+- **API Integration**: Connects to a RESTful backend API for CRUD operations on books and borrow requests.
+- **Component Library**: [Tailwind CSS, Shadcn UI].
+- **State Management**: [e.g., Redux, ].
+- **Routing**: Uses React Router for navigation between pages (e.g., book list, borrow request form).
+- **Form Validations**: Client-side validations for borrow requests and book inputs.
+- **Responsive Design**: Optimized for desktop and mobile devices.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 📦 Installation & Local Development
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/AR-Jame/PH-L2-assignment-4-client
+cd book-management
+````
+
+### 2️⃣ Install dependencies
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 4️⃣ Run the project
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+
+---
+
+## 🌐 Live URLs
+
+🔗 **Production URL**:
+[https://assignment-4-client-green.vercel.app](https://assignment-4-client-green.vercel.app)
+
+🔗 **Backend Production URL**:
+[https://assignment-4-server-pearl.vercel.app/](https://assignment-4-server-pearl.vercel.app/)
+
+---
+## API Integration
+The frontend communicates with the backend API for the following operations:
+- **Books**: Fetch book list, add/edit/delete books, and view book details.
+- **Borrow Requests**: Submit borrow requests, view request status, and handle quantity validation errors.
+- **Error Handling**: Displays user-friendly messages for API errors (e.g., insufficient book quantity).
+
+## Contact
+For questions or feedback, reach out to [your email or internal contact point].
