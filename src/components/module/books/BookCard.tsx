@@ -6,14 +6,21 @@ import type { IBooks } from '../../../../types'
 interface IProps {
     book: IBooks
 }
-const Book = ({ book }: IProps) => {
+const BookCard = ({ book }: IProps) => {
 
     return (
         <div className="border rounded-md p-5 w-sm">
-            <p className="text-2xl font-medium">{book.title}</p>
-            <p className="text-xl text-[#292929]">{book.author}</p>
+            <div className="flex justify-between items-start">
+                <div>
+                    <p className="text-2xl font-medium">{book.title}</p>
+                    <p className="text-xl text-[#292929]">{book.author}</p>
+                </div>
+                <div>
+                    <p className="bg-fuchsia-700 text-xs text-white px-2 py-0.5 rounded-full">{book.genre}</p>
+                </div>
+            </div>
             <hr className="my-3" />
-            <p>Genre: {book.genre}</p>
+
             <p>ISBN: {book.isbn}</p>
             <p>Copies: {book.copies}</p>
             <div className="mt-4 flex items-center justify-between">
@@ -27,4 +34,4 @@ const Book = ({ book }: IProps) => {
     );
 };
 
-export default Book;
+export default BookCard;

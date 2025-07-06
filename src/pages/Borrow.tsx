@@ -34,20 +34,17 @@ const Borrow = () => {
         const res = await newBorrow(borrowData)
         console.log(res);
         if (res?.data?.success === true) {
-            toast("Event has been created", {
-                description: "Sunday, December 03, 2023 at 9:00 AM",
-                action: {
-                    label: "Undo",
-                    onClick: () => console.log("Undo"),
-                },
+            toast("You successfully borrowed the book", {
+                description: <p className="text-black">Thanks for using our library. We hope you will return the book in time.</p>,
+                duration: 2000
             })
-            navigate('/books')
+            navigate('/borrow-summary')
         }
     }
     console.log(error);
     return (
         <section className="flex flex-col h-[90vh] justify-center items-center">
-            <p className="text-3xl mb-3 text-left">Update the book</p>
+            <p className="text-3xl mb-3 text-left">Borrow the book</p>
             <Form {...form}>
                 <form className="border p-10 rounded-md border-gray-600" onSubmit={form.handleSubmit(handleBorrow)}>
                     <FormField

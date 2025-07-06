@@ -1,15 +1,22 @@
-import { NavLink } from "react-router";
+import { cn } from "@/lib/utils";
+import { NavLink, useLocation } from "react-router";
 
 const Navbar = () => {
+    const location = useLocation();
     return (
-        <nav className="py-8 bg-blue-200 px-[10%] flex items-center justify-between">
-           <p>📚</p>
-           <ul className="text-xl flex items-center gap-5">
-            <li><NavLink to='/'>Home</NavLink></li>
-            <li><NavLink to='/books'>All Books</NavLink></li>
-            <li><NavLink to='/create-book'>Add Book</NavLink></li>
-            <li><NavLink to='/borrow-summary'>Borrow Summery</NavLink></li>
-           </ul>
+        <nav className={cn("py-3 z-10 top-0 w-full px-[10%] flex items-center justify-between", {
+            'fixed bg-[#0000006c] text-white': location.pathname === '/',
+            'bg-[#FDF7F1] text-black': location.pathname !== '/'
+        })}>
+            <div>
+                <img src="/logo.png" width={80} alt="Library management" />
+            </div>
+            <ul className="text-xl flex items-center gap-5">
+                <li><NavLink to='/'>Home</NavLink></li>
+                <li><NavLink to='/books'>All Books</NavLink></li>
+                <li><NavLink to='/create-book'>Add Book</NavLink></li>
+                <li><NavLink to='/borrow-summary'>Borrow Summery</NavLink></li>
+            </ul>
         </nav>
     );
 };

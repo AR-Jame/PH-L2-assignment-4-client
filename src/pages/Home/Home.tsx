@@ -1,8 +1,12 @@
+import BookList from "./BookList";
+import Hero from "./Hero";
+
 const Home = () => {
     return (
-        <div>
-            this is home
-        </div>
+        <section className="space-y-20 mb-20">
+            <Hero />
+            <BookList />
+        </section>
     );
 };
 

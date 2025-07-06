@@ -9,7 +9,7 @@ const BorrowSum = () => {
     return (
         <section className="flex flex-col min-h-[90vh] justify-center items-center">
             <p className="text-3xl mb-3 text-left">Borrow Summary</p>
-            <table className="min-w-xl border border-gray-300 rounded-2xl text-left text-sm">
+            <table className="min-w-xl border border-gray-300 rounded-2xl text-left">
                 <thead className="bg-gray-100">
                     <tr>
                         <th className="px-6 py-3 border-b">Sr.</th>
