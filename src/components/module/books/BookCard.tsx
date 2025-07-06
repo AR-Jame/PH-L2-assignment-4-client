@@ -3,6 +3,7 @@ import { Library, PenLine } from "lucide-react";
 import { BookDeleteDialog } from "./BookDeleteDialog";
 import { NavLink } from "react-router";
 import type { IBooks } from '../../../../types'
+import { cn } from "@/lib/utils";
 interface IProps {
     book: IBooks
 }
@@ -10,8 +11,16 @@ const BookCard = ({ book }: IProps) => {
 
     return (
         <div className="border rounded-md p-5 w-sm">
-            <p className="text-2xl font-medium">{book.title}</p>
-            <p className="text-xl text-[#292929]">{book.author}</p>
+            <div className="flex justify-between items-start">
+                <div>
+                    <p className="text-2xl font-medium">{book.title}</p>
+                    <p className="text-xl text-[#292929]">{book.author}</p>
+                </div>
+                <p className={cn("text-sm text-white px-2 rounded-md py-0.5", {
+                    'bg-red-300': book.available === false,
+                    'bg-green-300': book.available === true,
+                })}>{book.available ? 'Available' : 'Unavailable'}</p>
+            </div>
 
             <hr className="my-3" />
 
